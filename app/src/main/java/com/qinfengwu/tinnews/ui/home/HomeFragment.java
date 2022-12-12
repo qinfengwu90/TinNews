@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.qinfengwu.tinnews.R;
 import com.qinfengwu.tinnews.databinding.FragmentHomeBinding;
+import com.qinfengwu.tinnews.model.Article;
 import com.qinfengwu.tinnews.repository.NewsRepository;
 import com.qinfengwu.tinnews.repository.NewsViewModelFactory;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -47,6 +49,11 @@ public class HomeFragment extends Fragment implements CardStackListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         swipeAdapter = new CardSwipeAdapter();
+        swipeAdapter.setItemCallback(article -> {
+            HomeFragmentDirections.ActionNavigationHomeToNavigationDetails
+                    direction = HomeFragmentDirections.actionNavigationHomeToNavigationDetails(article);
+            NavHostFragment.findNavController(HomeFragment.this).navigate(direction);
+        });
         layoutManager = new CardStackLayoutManager(requireContext(), this);
         layoutManager.setStackFrom(StackFrom.Top);
         binding.homeCardStackView.setLayoutManager(layoutManager);
@@ -95,6 +102,10 @@ public class HomeFragment extends Fragment implements CardStackListener {
             Log.d("CardStackView", "Unliked " + layoutManager.getTopPosition());
         } else if (direction == Direction.Right) {
             Log.d("CardStackView", "Liked "  + layoutManager.getTopPosition());
+            // get swiped article from adapter list
+            Article article = swipeAdapter.getArticles().get(layoutManager.getTopPosition() - 1);
+            // favorite this article
+            viewModel.setFavoriteArticleInput(article);
         }
     }
 

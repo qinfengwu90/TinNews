@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import android.widget.GridLayout;
 
 import com.qinfengwu.tinnews.R;
 import com.qinfengwu.tinnews.databinding.FragmentSearchBinding;
+import com.qinfengwu.tinnews.model.Article;
 import com.qinfengwu.tinnews.repository.NewsRepository;
 import com.qinfengwu.tinnews.repository.NewsViewModelFactory;
 
@@ -46,6 +48,11 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SearchNewsAdapter newsAdapter = new SearchNewsAdapter();
+        newsAdapter.setItemCallback(article -> {
+            SearchFragmentDirections.ActionNavigationSearchToNavigationDetails
+                    direction = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(article);
+            NavHostFragment.findNavController(SearchFragment.this).navigate(direction);
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         binding.newsResultsRecyclerView.setLayoutManager(gridLayoutManager);
         binding.newsResultsRecyclerView.setAdapter(newsAdapter);

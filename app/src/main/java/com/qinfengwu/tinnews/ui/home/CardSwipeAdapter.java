@@ -21,6 +21,16 @@ import java.util.List;
 
 public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.CardSwipeViewHolder> {
 
+    public interface ItemCallback {
+        void onOpenDetails(Article article);
+    }
+
+    private ItemCallback itemCallback;
+
+    public void setItemCallback(ItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
+
     private List<Article> articles = new ArrayList<>();
 
     public void setArticles(List<Article> newsList) {
@@ -45,6 +55,9 @@ public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.Card
         if (article.urlToImage != null) {
             Picasso.get().load(article.urlToImage).into(holder.imageView);
         }
+        holder.itemView.setOnClickListener(view -> {
+            itemCallback.onOpenDetails(article);
+        });
     }
 
     @Override
@@ -64,5 +77,9 @@ public class CardSwipeAdapter extends RecyclerView.Adapter<CardSwipeAdapter.Card
             titleTextView = binding.swipeCardTitle;
             descriptionTextView = binding.swipeCardDescription;
         }
+    }
+
+    public List<Article> getArticles() {
+        return articles;
     }
 }

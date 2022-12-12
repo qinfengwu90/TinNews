@@ -19,6 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.SearchNewsViewHolder>{
+
+    public interface ItemCallback {
+        void onOpenDetails(Article article);
+    }
+
+    private ItemCallback itemCallback;
+
+    public void setItemCallback(ItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
     // supporting data
     private List<Article> articles = new ArrayList<>();
 
@@ -46,6 +56,9 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
             Picasso.get().load(article.urlToImage).resize(200,200)
                     .centerCrop().into(holder.itemImageView);
         }
+        holder.itemView.setOnClickListener(view -> {
+            itemCallback.onOpenDetails(article);
+        });
     }
 
     @Override
