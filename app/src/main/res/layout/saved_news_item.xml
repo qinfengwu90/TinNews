@@ -24,24 +24,17 @@
             app:tint="#00A76F" />
 
         <TextView
-            android:id="@+id/saved_item_author_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Author:"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/saved_item_author_content"
+            android:id="@+id/saved_item_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:layout_marginStart="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/saved_item_author_title"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/saved_item_favorite_image_view"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Ernest hemingway" />
+            android:textStyle="bold"
+            android:maxLines="2"
+            tools:text="@tools:sample/lorem/random" />
 
         <TextView
             android:id="@+id/saved_item_description_title_text_view"
@@ -51,7 +44,7 @@
             android:text="Description:"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saved_item_author_content" />
+            app:layout_constraintTop_toBottomOf="@id/saved_item_title" />
 
         <View
             android:id="@+id/saved_item_description_separator"

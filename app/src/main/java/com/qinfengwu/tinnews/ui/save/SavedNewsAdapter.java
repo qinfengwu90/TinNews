@@ -50,7 +50,7 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
     @Override
     public void onBindViewHolder(@NonNull SavedNewsViewHolder holder, int position) {
         Article article = articles.get(position);
-        holder.authorTextView.setText(article.author);
+        holder.titleTextView.setText(article.title);
         holder.descriptionTextView.setText(article.description);
         holder.favoriteIcon.setOnClickListener(view -> itemCallback.onRemoveFavorite(article));
         holder.itemView.setOnClickListener(view -> itemCallback.onOpenDetails(article));
@@ -63,14 +63,14 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
 
     // viewHolder
     public static class SavedNewsViewHolder extends RecyclerView.ViewHolder {
-        TextView authorTextView;
+        TextView titleTextView;
         TextView descriptionTextView;
         ImageView favoriteIcon;
 
         public SavedNewsViewHolder(@NonNull View itemView) {
             super(itemView);
             SavedNewsItemBinding binding = SavedNewsItemBinding.bind(itemView);
-            authorTextView = binding.savedItemAuthorContent;
+            titleTextView = binding.savedItemTitle;
             descriptionTextView = binding.savedItemDescriptionContent;
             favoriteIcon = binding.savedItemFavoriteImageView;
         }
